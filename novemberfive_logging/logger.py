@@ -5,6 +5,8 @@ from functools import lru_cache
 
 import structlog
 from structlog._frames import _find_first_app_frame_and_name
+from structlog.contextvars import merge_contextvars
+
 
 LOGGING_SOURCE_APPLICATION = "application"
 LOGGING_SOURCE_LIBRARY = "library"
@@ -19,6 +21,7 @@ class NovemberFiveLogger:
             cache_logger_on_first_use=True,
             wrapper_class=structlog.make_filtering_bound_logger(log_level or logging.INFO),
             processors=[
+                merge_contextvars,
                 structlog.threadlocal.merge_threadlocal_context,
                 structlog.processors.add_log_level,
                 structlog.processors.format_exc_info,
