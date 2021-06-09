@@ -15,8 +15,6 @@ LOGGING_SOURCE_DEPENDENCY = "dependency"
 class NovemberFiveLogger:
     @lru_cache()
     def __init__(self, log_level: str = None):
-        self.application_root_module = root_module_name
-
         structlog.configure(
             cache_logger_on_first_use=True,
             wrapper_class=structlog.make_filtering_bound_logger(log_level or logging.INFO),
