@@ -8,30 +8,19 @@ poetry add git+https://github.com/novemberfiveco/logging-standard-python@1.0.0
 
 ## Usage
 
-In a serverless project, you should create a decorator which will configure the logger. For example;
-
-```from novemberfive_logging.logger import NovemberFiveLogger
-
-def configure_logging(func):
-    def configure_logging_wrapper(*args, **kwargs):
-        NovemberFiveLogger(root_module_name="project_root_module_name")
-
-        return func(*args, **kwargs)
-
-    return configure_logging_wrapper
-```
-
-Make sure to change the name of your projects root module. After this you should decorate all your entrypoints so the
+The library exposes a decorator you should use on all your entrypoints so the
 logger gets configured on every lambda function call.
 
 ```
+from novemberfive_logging.decorator import configure_logging
+
 @configure_logging
 def resolve(event, context):
   ...
 ```
 
 Now that the logger is configured, just use the `get_logger()` function from structlog to get the correctly configured
-logger.
+logger anywhere inside your project.
 
 ```
 from structlog import get_logger

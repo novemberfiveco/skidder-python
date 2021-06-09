@@ -13,10 +13,8 @@ LOGGING_SOURCE_DEPENDENCY = "dependency"
 
 # TODO: Also catch exceptions!
 class NovemberFiveLogger:
-    application_root_module = None
-
     @lru_cache()
-    def __init__(self, root_module_name: str, log_level: str = None):
+    def __init__(self, log_level: str = None):
         self.application_root_module = root_module_name
 
         structlog.configure(
@@ -31,6 +29,7 @@ class NovemberFiveLogger:
                 structlog.processors.TimeStamper(fmt="iso", utc=True),
                 self._add_environment,
                 self._add_type,
+                self._add_source,
                 self._rename_event_to_message,
                 structlog.processors.JSONRenderer(indent=1, sort_keys=True),
             ],
@@ -44,6 +43,12 @@ class NovemberFiveLogger:
     # TODO: make dynamic
     def _add_type(self, _, __, event_dict):
         event_dict["type"] = "event"
+
+        return event_dict
+
+    # TODO: make dynamic
+    def _add_source(self, _, __, event_dict):
+        event_dict["source"] = LOGGING_SOURCE_APPLICATION
 
         return event_dict
 
@@ -69,11 +74,5 @@ class NovemberFiveLogger:
             return event_dict
         if frameinfo and module:
             event_dict["file"] = "{}:{}".format(module.__name__, frameinfo.lineno)
-
-            event_dict["source"] = LOGGING_SOURCE_APPLICATION
-            if not module.__name__.startswith(
-                self.application_root_module
-            ):  # TODO: set dynamically
-                event_dict["source"] = LOGGING_SOURCE_DEPENDENCY
 
         return event_dict
