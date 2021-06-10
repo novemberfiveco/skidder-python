@@ -32,7 +32,7 @@ class NovemberFiveLogger:
                 self._add_type,
                 self._add_source,
                 self._rename_event_to_message,
-                structlog.processors.JSONRenderer(indent=1, sort_keys=True),
+                structlog.processors.JSONRenderer(sort_keys=True),
             ],
         )
 
