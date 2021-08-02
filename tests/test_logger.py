@@ -15,15 +15,18 @@ def test_structlog_logging(capsys):
     try:
         raise RuntimeError("Oops")
     except RuntimeError as e:
-        log.critical("Something bad happened!", exception=e)
+        log.critical("Something bad happened!", exception=e, extra='foo')
 
     captured_output = capsys.readouterr()
-    print(captured_output.out)
     event = json.loads(captured_output.out)
 
     assert captured_output.err == ""
     assert event["component"] == "test"
     assert event["type"] == "error"
+    assert event["source"] == "application"
+    assert event["data"] == {
+        "extra": "foo"
+    }
 
 
 def test_stdlib_logging(capsys):
@@ -42,6 +45,7 @@ def test_stdlib_logging(capsys):
     assert captured_output.err == ""
     assert event["component"] == "test"
     assert event["type"] == "error"
+    assert event["source"] == "dependency"
 
 
 def test_request_context_logging(capsys):
