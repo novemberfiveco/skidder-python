@@ -23,7 +23,7 @@ def _get_log_level():
 
 
 def _get_renderer():
-    if "ENV" not in os.environ:
+    if os.getenv("ENV") == 'dev':
         return structlog.dev.ConsoleRenderer()
 
     return structlog.processors.JSONRenderer(sort_keys=True)
