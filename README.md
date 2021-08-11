@@ -2,7 +2,7 @@
 
 ## Installation
 ```commandline
-poetry add git+https://github.com/novemberfiveco/logging-standard-python@1.0.0
+poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.0
 ```
 
 ## Usage
