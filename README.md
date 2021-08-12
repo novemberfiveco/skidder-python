@@ -2,7 +2,7 @@
 
 ## Installation
 ```commandline
-poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.0
+poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.1
 ```
 
 ## Usage
@@ -116,6 +116,8 @@ def handler(event, context):
 
 ## Changelog
 
+- 2.0.1
+  - Added check for IS_LOCAL env variable to check local development env
 - 2.0.0
     - Pin structlog dependency (because using private function that is not part of public structlog API and can change without notice)
     - Set minimum logging level to DEBUG when in dev environment

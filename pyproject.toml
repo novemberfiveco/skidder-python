@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "logging-standard-python"
-version = "2.0.0"
+version = "2.0.1"
 readme = "README.md"
 license = "MIT"
 description = "November Five Logging"
