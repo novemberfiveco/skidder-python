@@ -2,7 +2,7 @@
 
 ## Installation
 ```commandline
-poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.1
+poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.2
 ```
 
 ## Usage
@@ -116,6 +116,8 @@ def handler(event, context):
 
 ## Changelog
 
+- 2.0.2
+  - set minimum python version to 3.7
 - 2.0.1
   - Added check for IS_LOCAL env variable to check local development env
 - 2.0.0
