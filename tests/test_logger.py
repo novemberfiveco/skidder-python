@@ -4,7 +4,7 @@ import os
 
 import structlog
 
-from novemberfive_logging import configure_logging, request_context_logging
+from skidder import configure_logging, request_context_logging
 
 
 def test_structlog_logging(capsys):

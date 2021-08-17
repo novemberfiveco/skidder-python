@@ -7,8 +7,8 @@ import uuid
 import structlog
 from structlog import contextvars
 
-from novemberfive_logging import _processors
-from novemberfive_logging import _fields
+from skidder import _processors
+from skidder import _fields
 
 
 def _get_log_level():

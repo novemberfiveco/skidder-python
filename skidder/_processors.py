@@ -4,8 +4,8 @@ import os
 import structlog
 from structlog.types import WrappedLogger
 
-from novemberfive_logging import _fields
-from novemberfive_logging._fields import Source
+from skidder import _fields
+from skidder._fields import Source
 
 
 def add_environment_field(_, __, event_dict):

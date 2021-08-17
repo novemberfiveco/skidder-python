@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "logging-standard-python"
-version = "2.0.2"
+name = "skidder"
+version = "3.0.0"
 readme = "README.md"
 license = "MIT"
-description = "November Five Logging"
+description = "skidder"
 authors = ["November Five"]
 packages = [
-    { include = "novemberfive_logging" },
-    { include = "novemberfive_logging/**/*.py" },
+    { include = "skidder" },
+    { include = "skidder/**/*.py" },
 ]
 
 [tool.poetry.dependencies]

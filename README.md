@@ -1,8 +1,14 @@
-# November Five Log Formatting Bundle
+# Skidder
+
+Skidder will drag your logs to where they need to go. A small, uniform and extensible logging library, implemented across major technologies.
 
 ## Installation
 ```commandline
-poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.2
+pip install git+https://github.com/novemberfiveco/skidder-python@3.0.0
+```
+or using poetry
+```commandline
+poetry add git+https://github.com/novemberfiveco/skidder-python@3.0.0
 ```
 
 ## Usage
@@ -12,7 +18,7 @@ poetry add git+https://github.com/novemberfiveco/logging-standard-python@2.0.2
 Configure logging using the `configure_logging()` function once at the beginning of your program.
 You can pass a value for the `component` field as required by N5's standards.
 ```python
-from novemberfive_logging import configure_logging
+from skidder import configure_logging
 
 configure_logging(component='my-backend-service')
 
@@ -116,6 +122,8 @@ def handler(event, context):
 
 ## Changelog
 
+- 3.0.0
+  - rename repo to Skidder
 - 2.0.2
   - set minimum python version to 3.7
 - 2.0.1
