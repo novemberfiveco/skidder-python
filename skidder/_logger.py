@@ -13,7 +13,7 @@ from skidder import _fields
 
 def _get_log_level():
     if os.getenv("LOG_LEVEL") is not None:
-        log_level = os.environ['LOG_LEVEL']
+        log_level = int(os.environ['LOG_LEVEL'])
     elif os.getenv("ENV") == 'dev' or os.environ.get("IS_LOCAL"):
         log_level = logging.DEBUG
     else:
