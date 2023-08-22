@@ -134,7 +134,7 @@ configure_logging(component='my-backend-service', enable_lumigo_prefix=True)
 
 ## Changelog
 
-- 3.0.2
+- 3.1.0
   - added Lumigo prefix to error logs
 - 3.0.0
   - rename repo to Skidder
