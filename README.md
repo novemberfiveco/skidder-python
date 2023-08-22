@@ -120,6 +120,22 @@ def handler(event, context):
     log.info("This log event is part of a request")
 ```
 
+### Adding a LUMIGO_LOG prefix to error logs
+When you want to have your error logs get noticed by Lumigo, they need a LUMIGO_LOG prefix. 
+This can be enabled by enabling the corresponding flag:
+```python
+from skidder import configure_logging
+
+configure_logging(component='my-backend-service', enable_lumigo_prefix=True)
+
+# note that we configure logging outside the AWS Lambda handler function
+def handler(event, context):
+    ...
+ 
+```
+
+
+
 ## Changelog
 
 - 3.0.0
