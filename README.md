@@ -127,10 +127,6 @@ This can be enabled by enabling the corresponding flag:
 from skidder import configure_logging
 
 configure_logging(component='my-backend-service', enable_lumigo_prefix=True)
-
-# note that we configure logging outside the AWS Lambda handler function
-def handler(event, context):
-    ...
  
 ```
 
@@ -138,6 +134,8 @@ def handler(event, context):
 
 ## Changelog
 
+- 3.0.2
+  - added Lumigo prefix to error logs
 - 3.0.0
   - rename repo to Skidder
 - 2.0.2
