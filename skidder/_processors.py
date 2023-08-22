@@ -71,7 +71,7 @@ def add_location_field(_, __, event_dict):
 def add_lumigo_prefix(enable_lumigo_prefix: bool):
     def processor(_, __, event_dict):
         if enable_lumigo_prefix and event_dict[_fields.LEVEL] in ("warning", "error", "critical"):
-            event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + event_dict[_fields.MESSAGE]
+            event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + str(event_dict[_fields.MESSAGE])
 
         return event_dict
 
