@@ -68,6 +68,16 @@ def add_location_field(_, __, event_dict):
     return event_dict
 
 
+def add_lumigo_prefix(enable_lumigo_prefix: bool):
+    def processor(_, __, event_dict):
+        if enable_lumigo_prefix and event_dict[_fields.LEVEL] in ("warning", "error", "critical"):
+            event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + event_dict[_fields.MESSAGE]
+
+        return event_dict
+
+    return processor
+
+
 def process_exception_field(logger: WrappedLogger, name: str, event_dict: dict):
     if 'exception' not in event_dict:
         return event_dict

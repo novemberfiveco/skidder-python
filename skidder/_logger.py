@@ -7,8 +7,7 @@ import uuid
 import structlog
 from structlog import contextvars
 
-from skidder import _processors
-from skidder import _fields
+from skidder import _fields, _processors
 
 
 def _get_log_level():
@@ -29,13 +28,14 @@ def _get_renderer():
     return structlog.processors.JSONRenderer(sort_keys=True)
 
 
-def configure_logging(component=None, log_level: int = _get_log_level()):
+def configure_logging(component=None, log_level: int = _get_log_level(), enable_lumigo_prefix: bool = False):
     shared_processors = [
         structlog.processors.add_log_level,
         structlog.processors.TimeStamper(fmt="iso", utc=True),
         _processors.add_environment_field,
         _processors.add_type_field,
         _processors.add_message_field,
+        _processors.add_lumigo_prefix(enable_lumigo_prefix=enable_lumigo_prefix),
         _processors.add_component_field(component=component),
     ]
 
