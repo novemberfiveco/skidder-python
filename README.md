@@ -4,11 +4,11 @@ Skidder will drag your logs to where they need to go. A small, uniform and exten
 
 ## Installation
 ```commandline
-pip install git+https://github.com/novemberfiveco/skidder-python@3.0.0
+pip install git+https://github.com/novemberfiveco/skidder-python@3.2.0
 ```
 or using poetry
 ```commandline
-poetry add git+https://github.com/novemberfiveco/skidder-python@3.0.0
+poetry add git+https://github.com/novemberfiveco/skidder-python@3.2.0
 ```
 
 ## Usage
