@@ -134,6 +134,8 @@ configure_logging(component='my-backend-service', enable_lumigo_prefix=True)
 
 ## Changelog
 
+- 3.2.0
+  - allow to pass a custom "type" to make sure Lumigo alerts with a custom type (instead of hardcoding to "event" or "error")
 - 3.1.1
   - removed Lumigo prefix from warning logs
 - 3.1.0

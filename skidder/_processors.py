@@ -15,6 +15,9 @@ def add_environment_field(_, __, event_dict):
 
 
 def add_type_field(_, __, event_dict):
+    if _fields.TYPE in event_dict:
+        return event_dict
+
     if event_dict[_fields.LEVEL] not in ("warning", "error", "critical"):
         event_dict[_fields.TYPE] = _fields.Type.EVENT
     else:
@@ -53,7 +56,9 @@ def add_location_field(_, __, event_dict):
     # (very rare) move that into a 'modline_original' key
     if "modline" in event_dict:
         event_dict["modline_original"] = event_dict["modline"]
-    f, name = structlog._frames._find_first_app_frame_and_name(additional_ignores=["logging", __name__])
+    f, name = structlog._frames._find_first_app_frame_and_name(
+        additional_ignores=["logging", __name__]
+    )
     if not f:
         return event_dict
     frameinfo = inspect.getframeinfo(f)
@@ -71,7 +76,9 @@ def add_location_field(_, __, event_dict):
 def add_lumigo_prefix(enable_lumigo_prefix: bool):
     def processor(_, __, event_dict):
         if enable_lumigo_prefix and event_dict[_fields.LEVEL] in ("error", "critical"):
-            event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + str(event_dict[_fields.MESSAGE])
+            event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + str(
+                event_dict[_fields.MESSAGE]
+            )
 
         return event_dict
 
@@ -79,7 +86,7 @@ def add_lumigo_prefix(enable_lumigo_prefix: bool):
 
 
 def process_exception_field(logger: WrappedLogger, name: str, event_dict: dict):
-    if 'exception' not in event_dict:
+    if "exception" not in event_dict:
         return event_dict
 
     # move to exc_info field to use Structlog's format_exc_info processor
