@@ -120,20 +120,26 @@ def handler(event, context):
     log.info("This log event is part of a request")
 ```
 
-### Adding a LUMIGO_LOG prefix to error logs
-When you want to have your error logs get noticed by Lumigo, they need a LUMIGO_LOG prefix. 
-This can be enabled by enabling the corresponding flag:
+### Adding an ALERT prefix to error logs
+When your alerting matches on log content (for example a CloudWatch subscription filter
+that forwards to Slack), error and critical logs can carry an `[ALERT]` prefix:
 ```python
 from skidder import configure_logging
 
-configure_logging(component='my-backend-service', enable_lumigo_prefix=True)
- 
+configure_logging(component='my-backend-service', enable_alert_prefix=True)
 ```
+
+`enable_lumigo_prefix` (the `[LUMIGO_LOG]` prefix for Lumigo) still works but is
+deprecated. The two flags are independent, so a project migrating off Lumigo can emit
+both prefixes during the transition.
 
 
 
 ## Changelog
 
+- 3.3.0
+  - added `enable_alert_prefix`, which prefixes error/critical logs with `[ALERT]`
+  - deprecated `enable_lumigo_prefix` (unchanged behaviour, now emits a DeprecationWarning)
 - 3.2.0
   - allow to pass a custom "type" to make sure Lumigo alerts with a custom type (instead of hardcoding to "event" or "error")
 - 3.1.1
