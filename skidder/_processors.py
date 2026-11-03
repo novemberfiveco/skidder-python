@@ -73,32 +73,18 @@ def add_location_field(_, __, event_dict):
     return event_dict
 
 
-def add_alert_prefix(enable_alert_prefix: bool, enable_lumigo_prefix: bool = False):
-    """Prefix error/critical messages with an alert marker.
-
-    [ALERT] is the tool-agnostic marker (e.g. matched by a CloudWatch subscription
-    filter). [LUMIGO_LOG] is kept for projects still alerting through Lumigo and is
-    deprecated. Both flags are independent, so a project mid-migration can emit both.
-    """
+def add_alert_prefix(enable_alert_prefix: bool):
+    """Prefix error/critical messages with [ALERT], a tool-agnostic marker for
+    alerting that matches on log content (e.g. a CloudWatch subscription filter)."""
     def processor(_, __, event_dict):
-        if event_dict[_fields.LEVEL] in ("error", "critical"):
-            if enable_lumigo_prefix:
-                event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + str(
-                    event_dict[_fields.MESSAGE]
-                )
-            if enable_alert_prefix:
-                event_dict[_fields.MESSAGE] = "[ALERT] " + str(
-                    event_dict[_fields.MESSAGE]
-                )
+        if enable_alert_prefix and event_dict[_fields.LEVEL] in ("error", "critical"):
+            event_dict[_fields.MESSAGE] = "[ALERT] " + str(
+                event_dict[_fields.MESSAGE]
+            )
 
         return event_dict
 
     return processor
-
-
-def add_lumigo_prefix(enable_lumigo_prefix: bool):
-    # Deprecated: kept for code importing this private module directly.
-    return add_alert_prefix(False, enable_lumigo_prefix=enable_lumigo_prefix)
 
 
 def process_exception_field(logger: WrappedLogger, name: str, event_dict: dict):

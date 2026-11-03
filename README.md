@@ -129,17 +129,14 @@ from skidder import configure_logging
 configure_logging(component='my-backend-service', enable_alert_prefix=True)
 ```
 
-`enable_lumigo_prefix` (the `[LUMIGO_LOG]` prefix for Lumigo) still works but is
-deprecated. The two flags are independent, so a project migrating off Lumigo can emit
-both prefixes during the transition.
-
 
 
 ## Changelog
 
-- 3.3.0
-  - added `enable_alert_prefix`, which prefixes error/critical logs with `[ALERT]`
-  - deprecated `enable_lumigo_prefix` (unchanged behaviour, now emits a DeprecationWarning)
+- 4.0.0
+  - **breaking**: removed `enable_lumigo_prefix` and the `[LUMIGO_LOG]` prefix;
+    use `enable_alert_prefix`, which prefixes error/critical logs with `[ALERT]`,
+    and make sure your alerting matches the new marker before upgrading
 - 3.2.0
   - allow to pass a custom "type" to make sure Lumigo alerts with a custom type (instead of hardcoding to "event" or "error")
 - 3.1.1

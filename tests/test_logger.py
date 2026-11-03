@@ -95,29 +95,12 @@ def test_alert_prefix_not_on_info_logs(capsys):
     assert event["message"] == "All fine"
 
 
-def test_lumigo_prefix_still_works_and_warns(capsys):
-    import warnings
-
+def test_alert_prefix_on_critical_logs(capsys):
     os.environ["ENV"] = "prod"
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("always")
-        configure_logging(component="test", enable_lumigo_prefix=True)
-
-    assert any(issubclass(w.category, DeprecationWarning) for w in caught)
-
-    log = structlog.get_logger()
-    log.error("Something bad happened!")
-
-    event = json.loads(capsys.readouterr().out)
-    assert event["message"] == "[LUMIGO_LOG] Something bad happened!"
-
-
-def test_both_prefixes_during_migration(capsys):
-    os.environ["ENV"] = "prod"
-    configure_logging(component="test", enable_alert_prefix=True, enable_lumigo_prefix=True)
+    configure_logging(component="test", enable_alert_prefix=True)
     log = structlog.get_logger()
 
     log.critical("Something bad happened!")
 
     event = json.loads(capsys.readouterr().out)
-    assert event["message"] == "[ALERT] [LUMIGO_LOG] Something bad happened!"
+    assert event["message"] == "[ALERT] Something bad happened!"

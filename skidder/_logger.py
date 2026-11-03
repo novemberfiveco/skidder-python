@@ -3,7 +3,6 @@ import logging
 import os
 import sys
 import uuid
-import warnings
 
 import structlog
 from structlog import contextvars
@@ -30,25 +29,14 @@ def _get_renderer():
 
 
 def configure_logging(component=None, log_level: int = _get_log_level(),
-                      enable_alert_prefix: bool = False, enable_lumigo_prefix: bool = False):
-    if enable_lumigo_prefix:
-        warnings.warn(
-            "enable_lumigo_prefix is deprecated, use enable_alert_prefix instead "
-            "(emits an [ALERT] prefix and make sure your alerting matches it)",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
+                      enable_alert_prefix: bool = False):
     shared_processors = [
         structlog.processors.add_log_level,
         structlog.processors.TimeStamper(fmt="iso", utc=True),
         _processors.add_environment_field,
         _processors.add_type_field,
         _processors.add_message_field,
-        _processors.add_alert_prefix(
-            enable_alert_prefix=enable_alert_prefix,
-            enable_lumigo_prefix=enable_lumigo_prefix,
-        ),
+        _processors.add_alert_prefix(enable_alert_prefix=enable_alert_prefix),
         _processors.add_component_field(component=component),
     ]
 
