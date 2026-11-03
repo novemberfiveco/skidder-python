@@ -72,3 +72,35 @@ def test_request_context_logging(capsys):
     assert event["component"] == "test"
     assert event["type"] == "error"
     assert event["requestId"] == "request-123"
+
+def test_alert_prefix_on_error_logs(capsys):
+    os.environ["ENV"] = "prod"
+    configure_logging(component="test", enable_alert_prefix=True)
+    log = structlog.get_logger()
+
+    log.error("Something bad happened!")
+
+    event = json.loads(capsys.readouterr().out)
+    assert event["message"] == "[ALERT] Something bad happened!"
+
+
+def test_alert_prefix_not_on_info_logs(capsys):
+    os.environ["ENV"] = "prod"
+    configure_logging(component="test", enable_alert_prefix=True)
+    log = structlog.get_logger()
+
+    log.info("All fine")
+
+    event = json.loads(capsys.readouterr().out)
+    assert event["message"] == "All fine"
+
+
+def test_alert_prefix_on_critical_logs(capsys):
+    os.environ["ENV"] = "prod"
+    configure_logging(component="test", enable_alert_prefix=True)
+    log = structlog.get_logger()
+
+    log.critical("Something bad happened!")
+
+    event = json.loads(capsys.readouterr().out)
+    assert event["message"] == "[ALERT] Something bad happened!"

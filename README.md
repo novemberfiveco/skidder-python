@@ -4,11 +4,11 @@ Skidder will drag your logs to where they need to go. A small, uniform and exten
 
 ## Installation
 ```commandline
-pip install git+https://github.com/novemberfiveco/skidder-python@3.2.0
+pip install git+https://github.com/novemberfiveco/skidder-python@4.0.0
 ```
 or using poetry
 ```commandline
-poetry add git+https://github.com/novemberfiveco/skidder-python@3.2.0
+poetry add git+https://github.com/novemberfiveco/skidder-python@4.0.0
 ```
 
 ## Usage
@@ -120,20 +120,23 @@ def handler(event, context):
     log.info("This log event is part of a request")
 ```
 
-### Adding a LUMIGO_LOG prefix to error logs
-When you want to have your error logs get noticed by Lumigo, they need a LUMIGO_LOG prefix. 
-This can be enabled by enabling the corresponding flag:
+### Adding an ALERT prefix to error logs
+When your alerting matches on log content (for example a CloudWatch subscription filter
+that forwards to Slack), error and critical logs can carry an `[ALERT]` prefix:
 ```python
 from skidder import configure_logging
 
-configure_logging(component='my-backend-service', enable_lumigo_prefix=True)
- 
+configure_logging(component='my-backend-service', enable_alert_prefix=True)
 ```
 
 
 
 ## Changelog
 
+- 4.0.0
+  - **breaking**: removed `enable_lumigo_prefix` and the `[LUMIGO_LOG]` prefix;
+    use `enable_alert_prefix`, which prefixes error/critical logs with `[ALERT]`,
+    and make sure your alerting matches the new marker before upgrading
 - 3.2.0
   - allow to pass a custom "type" to make sure Lumigo alerts with a custom type (instead of hardcoding to "event" or "error")
 - 3.1.1

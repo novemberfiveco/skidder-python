@@ -73,10 +73,12 @@ def add_location_field(_, __, event_dict):
     return event_dict
 
 
-def add_lumigo_prefix(enable_lumigo_prefix: bool):
+def add_alert_prefix(enable_alert_prefix: bool):
+    """Prefix error/critical messages with [ALERT], a tool-agnostic marker for
+    alerting that matches on log content (e.g. a CloudWatch subscription filter)."""
     def processor(_, __, event_dict):
-        if enable_lumigo_prefix and event_dict[_fields.LEVEL] in ("error", "critical"):
-            event_dict[_fields.MESSAGE] = "[LUMIGO_LOG] " + str(
+        if enable_alert_prefix and event_dict[_fields.LEVEL] in ("error", "critical"):
+            event_dict[_fields.MESSAGE] = "[ALERT] " + str(
                 event_dict[_fields.MESSAGE]
             )
 
